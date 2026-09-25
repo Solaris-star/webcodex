@@ -115,7 +115,7 @@ fn ops_runners_is_canonical_and_agents_is_rejected() {
         CliAction::Ops(OpsCommand::Runners(opts)) => assert!(opts.json),
         other => panic!("canonical ops runners path did not parse: {other:?}"),
     }
-    match cli_action(["ops", "runners", "--json"]) {
+    match cli_action(["ops", "agents", "--json"]) {
         CliAction::Exit { code, stderr, .. } => {
             assert_eq!(code, 2);
             assert!(
