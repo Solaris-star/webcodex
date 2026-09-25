@@ -664,13 +664,13 @@ pub(crate) fn ops_status_report(server_url: &str, runtime: &Option<Value>) -> Op
     let stale = runner_count(runtime, "stale_count", "stale");
     if online == 0 {
         verdict.fail_reason(
-            "no_online_agents",
+            "no_online_runners",
             "start a webcodex-runner and rerun ops status",
         );
     } else {
         if stale > 0 {
             verdict.warn_reason(
-                format!("stale_agents:{}", stale),
+                format!("stale_runners:{}", stale),
                 "inspect stale Runners with ops runners",
             );
         }
@@ -741,19 +741,19 @@ pub(crate) fn ops_runners_report(server_url: &str, runtime: &Option<Value>) -> O
         .sum::<u64>();
     if online == 0 {
         verdict.fail_reason(
-            "no_online_agents",
+            "no_online_runners",
             "start a webcodex-runner and rerun ops runners",
         );
     }
     if stale > 0 {
         verdict.warn_reason(
-            format!("stale_agents:{}", stale),
+            format!("stale_runners:{}", stale),
             "inspect stale Runners and transport health",
         );
     }
     if active_jobs > 0 {
         verdict.warn_reason(
-            format!("active_agent_jobs:{}", active_jobs),
+            format!("active_runner_jobs:{}", active_jobs),
             "wait for active Runner jobs to finish before smoke validation",
         );
     }

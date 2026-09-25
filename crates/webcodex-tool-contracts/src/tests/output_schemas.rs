@@ -421,7 +421,7 @@ fn agent_continuation_projection_schema_requires_strict_nullable_restart_recover
 #[test]
 fn agent_identity_listing_readiness_schema_is_sparse_and_non_authoritative() {
     let schema = output_schema_for_tool("list_agent_identities");
-    let agent = &schema["properties"]["output"]["properties"]["runners"]["items"];
+    let agent = &schema["properties"]["output"]["properties"]["agents"]["items"];
     assert_eq!(agent["additionalProperties"], false);
     let properties = agent["properties"].as_object().unwrap();
     assert_eq!(
@@ -1924,6 +1924,25 @@ fn key_tool_output_schemas_include_expected_fields() {
             "list_projects missing {field}"
         );
     }
+}
+
+#[test]
+fn runner_observability_schema_does_not_collide_with_durable_agent_identity() {
+    let specs = registered_tool_specs();
+
+    let runtime = output_schema_properties(&specs, "runtime_status");
+    assert!(runtime.contains_key("runners"));
+    assert!(!runtime.contains_key("agents"));
+
+    let listed = output_schema_properties(&specs, "list_runners");
+    assert!(listed.contains_key("runners"));
+    assert!(listed.contains_key("count"));
+    assert!(!listed.contains_key("agents"));
+    assert!(!listed.contains_key("clients"));
+
+    let durable_agents = output_schema_properties(&specs, "list_agent_identities");
+    assert!(durable_agents.contains_key("agents"));
+    assert!(!durable_agents.contains_key("runners"));
 }
 
 #[test]

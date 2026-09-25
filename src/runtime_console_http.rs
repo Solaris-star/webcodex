@@ -4076,12 +4076,12 @@ mod tests {
         let (status, agents) = post_communication(
             &service,
             shared_key,
-            "runners",
+            "agents",
             json!({"offset": 0, "limit": 10}),
         )
         .await;
         assert_eq!(status, StatusCode::OK);
-        let agent_rows = agents["runners"].as_array().unwrap();
+        let agent_rows = agents["agents"].as_array().unwrap();
         assert_eq!(
             agent_rows
                 .iter()
@@ -5442,7 +5442,7 @@ mod tests {
             .iter()
             .any(|row| row["session_id"] == second_session.session_id));
         assert_eq!(detail["tasks"][0]["summary"]["task_id"], task_id);
-        assert_eq!(detail["runners"][0]["agent_id"], agent_id);
+        assert_eq!(detail["agents"][0]["agent_id"], agent_id);
         assert_eq!(detail["windows"][0]["client_window_key"], window_key);
         assert_eq!(detail["windows"][0]["last_seen_at_ms"], 20_001);
         let window_sessions = detail["windows"][0]["session_ids"].as_array().unwrap();

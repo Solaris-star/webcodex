@@ -23,7 +23,7 @@ import { PageHeader } from "../components/ui/PageHeader.js";
 import type { SessionLocation } from "../state/useSessionWorkspace.js";
 import { useWindowWorkspace } from "../state/useWindowWorkspace.js";
 
-type RuntimeMode = "overview" | "windows" | "runners";
+type RuntimeMode = "overview" | "windows" | "agents";
 
 function buildAlignmentLabel(value: string | undefined, t: (source: string) => string): string {
   switch (value) {
@@ -49,7 +49,7 @@ type Props = {
   overviewAvailability: Availability;
   projects: ProjectRow[];
   onOpenSession: (location: SessionLocation) => void;
-  target?: { mode: "windows"; windowKey: string } | { mode: "runners"; agentId: string } | null;
+  target?: { mode: "windows"; windowKey: string } | { mode: "agents"; agentId: string } | null;
   onTargetConsumed?: () => void;
   onUnauthorized: () => void;
 };
@@ -87,7 +87,7 @@ export function RuntimeView({
       setMode("windows");
     } else {
       setRequestedAgentId(target.agentId);
-      setMode("runners");
+      setMode("agents");
     }
     onTargetConsumed?.();
   }, [onTargetConsumed, target]);
@@ -124,7 +124,7 @@ export function RuntimeView({
         <button className={mode === "windows" ? "active" : ""} role="tab" aria-selected={mode === "windows"} onClick={() => setMode("windows")}>
           <Monitor size={15} /> {t("Window Activity")} <span>{windows.total || windows.windows.length}</span>
         </button>
-        <button className={mode === "runners" ? "active" : ""} role="tab" aria-selected={mode === "runners"} onClick={() => setMode("runners")}>
+        <button className={mode === "agents" ? "active" : ""} role="tab" aria-selected={mode === "agents"} onClick={() => setMode("agents")}>
           <Bot size={15} /> {t("Agents")} {agents.count !== null && <span>{agents.count}</span>}
         </button>
       </div>
@@ -216,7 +216,7 @@ export function RuntimeView({
             </div>
           </section>
         </>
-      ) : mode === "runners" ? (
+      ) : mode === "agents" ? (
         <AgentsPanel client={client} language={language} onUnauthorized={onUnauthorized} selectedAgentId={requestedAgentId} onSelectedAgentConsumed={() => setRequestedAgentId("")} />
       ) : (
         <div className="windows-workbench" data-testid="window-workbench">

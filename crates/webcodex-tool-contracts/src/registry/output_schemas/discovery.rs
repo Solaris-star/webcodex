@@ -152,13 +152,9 @@ pub(super) fn output_schema_for_tool(name: &str) -> Option<Value> {
         "list_runners" => Some(wrapped_output_schema(vec![
             (
                 "runners",
-                array_schema(open_object_schema("Runner summary including bounded Runner-configured host_context advisory data, never authority or proof of current state, plus job_concurrency limit/running/queued facts."), "Legacy compatibility key containing Runner summaries."),
+                array_schema(open_object_schema("Runner summary including bounded Runner-configured host_context advisory data, never authority or proof of current state, plus job_concurrency limit/running/queued facts."), "Canonical Runner summaries."),
             ),
-            (
-                "clients",
-                array_schema(open_object_schema("Runner client summary including job_concurrency limit/running/queued facts."), "Runner client summaries."),
-            ),
-            ("count", schema_type("integer", "Runner/client count.")),
+            ("count", schema_type("integer", "Runner count.")),
         ])),
         "list_tools" => Some(wrapped_output_schema(vec![
             (

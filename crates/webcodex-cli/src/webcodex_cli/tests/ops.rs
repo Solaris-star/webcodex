@@ -928,7 +928,7 @@ fn ops_status_tool_inventory_rejects_missing_empty_or_inconsistent_data() {
 }
 
 #[test]
-fn ops_status_no_online_agents_fails() {
+fn ops_status_no_online_runners_fails() {
     let mut runtime = runtime_status_fixture();
     runtime["runners"]["online_count"] = json!(0);
     runtime["runners"]["stale_count"] = json!(1);
@@ -940,7 +940,7 @@ fn ops_status_no_online_agents_fails() {
     assert!(report
         .verdict
         .blocking_reasons
-        .contains(&"no_online_agents".to_string()));
+        .contains(&"no_online_runners".to_string()));
 }
 
 #[test]
@@ -988,6 +988,14 @@ fn ops_runners_maps_online_stale_and_jobs() {
     assert_eq!(report.summary["stale_count"], 1);
     assert!(report.summary.get("offline_count").is_none());
     assert_eq!(report.summary["active_jobs"], 1);
+    assert!(report
+        .verdict
+        .warning_reasons
+        .contains(&"stale_runners:1".to_string()));
+    assert!(report
+        .verdict
+        .warning_reasons
+        .contains(&"active_runner_jobs:1".to_string()));
 }
 
 #[test]

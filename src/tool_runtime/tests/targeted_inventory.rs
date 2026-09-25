@@ -690,6 +690,8 @@ async fn list_runners_supports_exact_batch_and_compact_projection() {
     assert!(legacy.success);
     assert_eq!(legacy.output["count"], 3);
     assert!(legacy.output["runners"][0].get("projects").is_some());
+    assert!(legacy.output.get("agents").is_none());
+    assert!(legacy.output.get("clients").is_none());
 
     let focused = runtime
         .dispatch(list_runners_call(Some("special"), None, Some(false), true))

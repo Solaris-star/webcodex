@@ -2551,10 +2551,10 @@ async fn runtime_status_compact_and_summary_only_return_sanitized_summary() {
             "/build/git_dirty",
             "/tools/count",
             "/jobs/active_count",
-            "/agents/count",
-            "/agents/online_count",
-            "/agents/stale_count",
-            "/agents/summary/online",
+            "/runners/count",
+            "/runners/online_count",
+            "/runners/stale_count",
+            "/runners/summary/online",
             "/projects/effective/status",
             "/projects/effective/count",
             "/projects/agent_registered/count",
@@ -2578,18 +2578,22 @@ async fn runtime_status_compact_and_summary_only_return_sanitized_summary() {
         assert_eq!(summary["runners"]["online_count"], 1);
         assert_eq!(summary["runners"]["stale_count"], 0);
         assert!(summary["runners"].get("offline_count").is_none());
+        assert!(
+            summary.get("agents").is_none(),
+            "compact runtime_status must not reintroduce the legacy agents alias"
+        );
         assert_eq!(summary["projects"]["effective"]["count"], 1);
         assert_eq!(summary["projects"]["effective"]["status"], "ok");
         assert!(summary["tools"].get("names").is_none());
         assert!(
             summary
-                .pointer("/agents/clients/0/policy/allowed_roots")
+                .pointer("/runners/clients/0/policy/allowed_roots")
                 .is_none(),
             "compact runtime_status must not include full client policy"
         );
         assert!(
             summary
-                .pointer("/agents/clients/0/shell_profiles")
+                .pointer("/runners/clients/0/shell_profiles")
                 .is_none(),
             "compact runtime_status must not include shell profile details"
         );

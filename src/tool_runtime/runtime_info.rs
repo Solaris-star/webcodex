@@ -256,7 +256,6 @@ impl ToolRuntime {
         ToolResult::ok(json!({
             // Runtime Console, admin/ops, and status projections consume this established key.
             "runners": runners,
-            "clients": runner_health_clients(&clients, &runner_jobs, now),
             "summary": runner_health_summary(&clients, &runner_jobs, now),
             "count": clients.len(),
         }))
@@ -847,9 +846,6 @@ pub(crate) fn compact_runtime_status(status: &Value) -> Value {
         "authority": status.get("authority").cloned().unwrap_or(Value::Null),
     });
     if let Some(object) = compact.as_object_mut() {
-        if let Some(runners) = object.get("runners").cloned() {
-            object.insert("agents".to_string(), runners);
-        }
         for field in ["focus", "server", "fleet_summary"] {
             if let Some(value) = status.get(field) {
                 object.insert(field.to_string(), value.clone());

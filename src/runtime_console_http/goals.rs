@@ -219,7 +219,7 @@ async fn exact_agent(
     }
     result
         .output
-        .get("runners")
+        .get("agents")
         .and_then(Value::as_array)
         .and_then(|agents| agents.first())
         .cloned()
@@ -365,7 +365,7 @@ async fn goal_detail_for_auth(
         "tasks": tasks,
         "waits": waits,
         "waits_truncated": waits_truncated,
-        "runners": agents,
+        "agents": agents,
         "windows": windows.into_values().collect::<Vec<_>>(),
     }))
 }

@@ -686,7 +686,7 @@ async fn version_compatibility_reports_stable_mismatch_facts() {
         .register(unsupported)
         .await
         .unwrap_err();
-    assert_eq!(unsupported, "runner_protocol_generation is unsupported");
+    assert_eq!(unsupported, "agent_protocol_generation is unsupported");
 
     let status = runtime.runtime_status(None).await;
     assert!(status.success);

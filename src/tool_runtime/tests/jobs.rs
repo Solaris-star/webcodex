@@ -2512,10 +2512,8 @@ async fn runtime_status_and_list_runners_filter_concurrency_counts_by_auth_group
         agents_a.output["runners"][0]["job_concurrency"],
         json!({"limit": 4, "running": 1, "queued": 1})
     );
-    assert_eq!(
-        agents_a.output["clients"][0]["job_concurrency"],
-        json!({"limit": 4, "running": 1, "queued": 1})
-    );
+    assert!(agents_a.output.get("clients").is_none());
+    assert!(agents_a.output.get("agents").is_none());
     let new_observability = agents_a.output["runners"][0]["job_concurrency"]
         .as_object()
         .unwrap();
