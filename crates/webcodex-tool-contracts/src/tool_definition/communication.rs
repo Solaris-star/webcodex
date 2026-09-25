@@ -51,7 +51,7 @@ pub(super) const DEFINITIONS: &[ToolDefinition] = &[
                 "list_agent_identities",
                 super::ToolAuditPolicy::typed_fields(&[
                     super::ToolAuditResultField::value("total_count"),
-                    super::ToolAuditResultField::array_len("returned_count", "agents"),
+                    super::ToolAuditResultField::array_len("returned_count", "runners"),
                     super::ToolAuditResultField::value("offset"),
                     super::ToolAuditResultField::value("next_offset"),
                     super::ToolAuditResultField::value("truncated"),

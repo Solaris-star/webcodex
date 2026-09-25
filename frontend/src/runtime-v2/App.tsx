@@ -52,7 +52,7 @@ import { RuntimeView } from "./views/RuntimeView.js";
 import { WorkView } from "./views/WorkView.js";
 
 type PrimaryView = "work" | "projects" | "runtime";
-type RuntimeTarget = { mode: "windows"; windowKey: string } | { mode: "agents"; agentId: string };
+type RuntimeTarget = { mode: "windows"; windowKey: string } | { mode: "runners"; agentId: string };
 const VIEW_KEY = "webcodex.runtime.v2.view.v1";
 const BUCKET_PRIORITY: Record<WorkBucket, number> = { running: 0, attention: 1, active: 2, recent: 3 };
 
@@ -148,7 +148,7 @@ export function App() {
   }, [setView]);
 
   const openAgent = useCallback((agentId: string) => {
-    setRuntimeTarget({ mode: "agents", agentId });
+    setRuntimeTarget({ mode: "runners", agentId });
     setView("runtime");
   }, [setView]);
 

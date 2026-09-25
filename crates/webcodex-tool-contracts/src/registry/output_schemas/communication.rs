@@ -348,7 +348,7 @@ pub fn output_schema_for_tool(name: &str) -> Option<Value> {
                 schema_type("boolean", "True when more Agents remain."),
             ),
             (
-                "agents",
+                "runners",
                 array_schema(
                     listed_agent_schema(),
                     "Bounded Agent Card page with current continuation readiness.",

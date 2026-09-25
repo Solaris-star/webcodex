@@ -421,7 +421,7 @@ fn agent_continuation_projection_schema_requires_strict_nullable_restart_recover
 #[test]
 fn agent_identity_listing_readiness_schema_is_sparse_and_non_authoritative() {
     let schema = output_schema_for_tool("list_agent_identities");
-    let agent = &schema["properties"]["output"]["properties"]["agents"]["items"];
+    let agent = &schema["properties"]["output"]["properties"]["runners"]["items"];
     assert_eq!(agent["additionalProperties"], false);
     let properties = agent["properties"].as_object().unwrap();
     assert_eq!(
@@ -1906,7 +1906,7 @@ fn key_tool_output_schemas_include_expected_fields() {
         "auth_enabled",
         "configured_public_url",
         "effective_config",
-        "agents",
+        "runners",
         "projects",
         "jobs",
         "tools",

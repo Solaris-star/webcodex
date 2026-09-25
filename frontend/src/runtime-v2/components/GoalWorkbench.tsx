@@ -211,7 +211,7 @@ function GoalDetail({
 }: {
   detail: GoalDetailResponse;
   language: RuntimeLanguage;
-  controller: GoalDetailResponse["agents"][number] | undefined;
+  controller: GoalDetailResponse["runners"][number] | undefined;
   onOpenSession: (location: SessionLocation) => void;
   onOpenAgent: (agentId: string) => void;
   onOpenWindow: (windowKey: string) => void;
@@ -379,7 +379,7 @@ function GoalWaitRow({ wait, language }: { wait: GoalWait; language: RuntimeLang
   );
 }
 
-function GoalInspector({ detail, controller, language, onOpenAgent }: { detail: GoalDetailResponse; controller: GoalDetailResponse["agents"][number] | undefined; language: RuntimeLanguage; onOpenAgent: (agentId: string) => void }) {
+function GoalInspector({ detail, controller, language, onOpenAgent }: { detail: GoalDetailResponse; controller: GoalDetailResponse["runners"][number] | undefined; language: RuntimeLanguage; onOpenAgent: (agentId: string) => void }) {
   const t = (value: string) => translate(value, language);
   const goal = detail.goal;
   const plan = detail.goal_plan;
